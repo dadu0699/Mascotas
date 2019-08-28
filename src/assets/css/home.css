@@ -1,0 +1,153 @@
+.wrapper {
+  padding-top: 25%;
+}
+
+.pet-card {
+  background: white;
+  width: 300px;
+  display: inline-block;
+  margin: auto;
+  border-radius: 19px;
+  position: relative;
+  text-align: center;
+  box-shadow: -1px 15px 30px -12px black;
+}
+
+.pet-card__image {
+  position: relative;
+  height: 245px;
+  margin-bottom: 35px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.pet-card__image img {
+  width: 400px;
+  position: absolute;
+  top: -90px;
+  left: -50px;
+}
+
+.pet-card__image--dog {
+  background: #bfc1cd;
+}
+
+.pet-card__image--owl {
+  background: #f9daab;
+}
+
+.pet-card__image--cat {
+  background: #939fd9;
+}
+
+.pet-card__image--bunny {
+  background: #68bac8;
+}
+
+
+.pet-card__level {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.pet-card__level--dog {
+  color: #bfc1cd;
+}
+
+.pet-card__level--owl {
+  color: #f9daab;
+}
+
+.pet-card__level--cat {
+  color: #939fd9;
+}
+
+.pet-card__level--bunny {
+  color: #68bac8;
+}
+
+.pet-card__unit-name {
+  font-size: 26px;
+  color: black;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.pet-card__unit-description {
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.pet-card__unit-stats--dog {
+  background: #bfc1cd;
+}
+
+.pet-card__unit-stats--dog .one-third {
+  border-right: 1px solid #bfc1cd;
+}
+
+.pet-card__unit-stats--owl {
+  background: #f9daab;
+}
+
+.pet-card__unit-stats--owl .one-third {
+  border-right: 1px solid #f9daab;
+}
+
+.pet-card__unit-stats--cat {
+  background: #939fd9;
+}
+
+.pet-card__unit-stats--cat .one-third {
+  border-right: 1px solid #939fd9;
+}
+
+.pet-card__unit-stats--bunny {
+  background: #68bac8;
+}
+
+.pet-card__unit-stats--bunny .one-third {
+  border-right: 1px solid #68bac8;
+}
+
+.pet-card__unit-stats {
+  color: white;
+  font-weight: 700;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.pet-card__unit-stats .one-third {
+  width: 33%;
+  float: left;
+  padding: 20px 15px;
+  cursor: pointer;
+}
+
+.pet-card__unit-stats .stat {
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pet-card__unit-stats .stat-value {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.pet-card__unit-stats .no-border {
+  border-right: none;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}

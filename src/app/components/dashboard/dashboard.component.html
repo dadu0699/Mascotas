@@ -1,0 +1,214 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">Mascotas</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <button type="button" class="nav-link btn btn-link" data-toggle="modal"
+                    data-target="#modalAgregarMascota">
+                    Adoptar
+                </button>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            {{nombreUsuario}}
+        </span>
+    </div>
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="modalAgregarMascota" tabindex="-1" role="dialog" aria-labelledby="modalAgregarMascota"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAgregarMascota">Mascotas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #formPet="ngForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nombre" name="nombre" #nombre="ngModel"
+                            [(ngModel)]="mascota.nombre" minlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="tipo" #tipo="ngModel" [(ngModel)]="mascota.tipo" required>
+                            <option>Perro</option>
+                            <option>Gato</option>
+                            <option>Búho</option>
+                            <option>Conejo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info" [disabled]="!formPet.form.valid" id="alert">
+                        Adoptar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-center align-items-center" id="contenido">
+    <div class="col-12 col-md-6 col-sm-6 col-lg-3 animated zoomIn" *ngFor="let mascota of mascotas">
+        <div class="container d-flex justify-content-center">
+            <br>
+            <div class="wrapper">
+                <div class="pet-card dog"
+                    *ngIf="mascota.tipo == 'Perro' && (mascota.salud > 0 || mascota.felicidad > 0 || mascota.higiene > 0)">
+                    <div class="pet-card__image pet-card__image--dog">
+                        <img src="assets/images/happyDog.png" alt="dog"
+                            *ngIf="mascota.salud > 60 && mascota.felicidad > 60 && mascota.higiene > 60" />
+                        <img src="assets/images/sickDog.png" alt="dog"
+                            *ngIf="mascota.salud <= 60 || mascota.felicidad <= 60 || mascota.higiene <= 60" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--dog">Perro</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}}</div>
+                    <br>
+                    <div class="pet-card__unit-stats pet-card__unit-stats--dog clearfix">
+                        <div class="one-third" (click)="aumentarSalud(mascota.idMascota)">
+                            <div class="stat">{{mascota.salud}} %</div>
+                            <div class="stat-value">Salud</div>
+                        </div>
+                        <div class="one-third" (click)="aumentarFelicidad(mascota.idMascota)">
+                            <div class="stat">{{mascota.felicidad}} %</div>
+                            <div class="stat-value">Felicidad</div>
+                        </div>
+                        <div class="one-third no-border" (click)="aumentarHigiene(mascota.idMascota)">
+                            <div class="stat">{{mascota.higiene}} %</div>
+                            <div class="stat-value">Higiene</div>
+                        </div>
+                    </div>
+                </div> <!-- end pet-card dog-->
+
+                <div class="pet-card dog" (click)="eliminarMascota(mascota.idMascota)" style="cursor: pointer;"
+                    *ngIf="mascota.tipo == 'Perro' && mascota.salud == 0 && mascota.felicidad == 0 && mascota.higiene == 0">
+                    <div class="pet-card__image pet-card__image--dog">
+                        <img src="assets/images/sadDog.png" alt="dog" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--dog">Perro</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}} te ha abandonado</div>
+                    <br>
+                </div> <!-- end pet-card abandonedDog-->
+
+                <div class="pet-card owl"
+                    *ngIf="mascota.tipo == 'Búho' && (mascota.salud > 0 || mascota.felicidad > 0 || mascota.higiene > 0)">
+                    <div class="pet-card__image pet-card__image--owl">
+                        <img src="assets/images/happyOwl.png" alt="owl"
+                            *ngIf="mascota.salud > 60 && mascota.felicidad > 60 && mascota.higiene > 60" />
+                        <img src="assets/images/sickOwl.png" alt="owl"
+                            *ngIf="mascota.salud <= 60 || mascota.felicidad <= 60 || mascota.higiene <= 60" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--owl">Búho</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}}</div>
+                    <br>
+                    <div class="pet-card__unit-stats pet-card__unit-stats--owl clearfix">
+                        <div class="one-third" (click)="aumentarSalud(mascota.idMascota)">
+                            <div class="stat">{{mascota.salud}} %</div>
+                            <div class="stat-value">Salud</div>
+                        </div>
+                        <div class="one-third" (click)="aumentarFelicidad(mascota.idMascota)">
+                            <div class="stat">{{mascota.felicidad}} %</div>
+                            <div class="stat-value">Felicidad</div>
+                        </div>
+                        <div class="one-third no-border" (click)="aumentarHigiene(mascota.idMascota)">
+                            <div class="stat">{{mascota.higiene}} %</div>
+                            <div class="stat-value">Higiene</div>
+                        </div>
+                    </div>
+                </div> <!-- end pet-card owl-->
+
+                <div class="pet-card owl" (click)="eliminarMascota(mascota.idMascota)" style="cursor: pointer;"
+                    *ngIf="mascota.tipo == 'Búho' && mascota.salud == 0 && mascota.felicidad == 0 && mascota.higiene == 0">
+                    <div class="pet-card__image pet-card__image--owl">
+                        <img src="assets/images/sadOwl.png" alt="owl" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--owl">Búho</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}} te ha abandonado</div>
+                    <br>
+                </div> <!-- end pet-card abandonedOwl-->
+
+                <div class="pet-card cat"
+                    *ngIf="mascota.tipo == 'Gato' && (mascota.salud > 0 || mascota.felicidad > 0 || mascota.higiene > 0)">
+                    <div class="pet-card__image pet-card__image--cat">
+                        <img src="assets/images/happyCat.png" alt="cat"
+                            *ngIf="mascota.salud > 60 && mascota.felicidad > 60 && mascota.higiene > 60" />
+                        <img src="assets/images/sickCat.png" alt="cat"
+                            *ngIf="mascota.salud <= 60 || mascota.felicidad <= 60 || mascota.higiene <= 60" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--cat">Gato</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}}</div>
+                    <br>
+                    <div class="pet-card__unit-stats pet-card__unit-stats--cat clearfix">
+                        <div class="one-third" (click)="aumentarSalud(mascota.idMascota)">
+                            <div class="stat">{{mascota.salud}} %</div>
+                            <div class="stat-value">Salud</div>
+                        </div>
+                        <div class="one-third" (click)="aumentarFelicidad(mascota.idMascota)">
+                            <div class="stat">{{mascota.felicidad}} %</div>
+                            <div class="stat-value">Felicidad</div>
+                        </div>
+                        <div class="one-third no-border" (click)="aumentarHigiene(mascota.idMascota)">
+                            <div class="stat">{{mascota.higiene}} %</div>
+                            <div class="stat-value">Higiene</div>
+                        </div>
+                    </div>
+                </div> <!-- end pet-card cat-->
+
+                <div class="pet-card cat" (click)="eliminarMascota(mascota.idMascota)" style="cursor: pointer;"
+                    *ngIf="mascota.tipo == 'Gato' && mascota.salud == 0 && mascota.felicidad == 0 && mascota.higiene == 0">
+                    <div class="pet-card__image pet-card__image--cat">
+                        <img src="assets/images/sadCat.png" alt="cat" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--cat">Gato</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}} te ha abandonado</div>
+                    <br>
+                </div> <!-- end pet-card abandonedCat-->
+
+                <div class="pet-card bunny"
+                    *ngIf="mascota.tipo == 'Conejo' && (mascota.salud > 0 || mascota.felicidad > 0 || mascota.higiene > 0)">
+                    <div class="pet-card__image pet-card__image--bunny">
+                        <img src="assets/images/happyBunny.png" alt="bunny"
+                            *ngIf="mascota.salud > 60 && mascota.felicidad > 60 && mascota.higiene > 60" />
+                        <img src="assets/images/sickBunny.png" alt="bunny"
+                            *ngIf="mascota.salud <= 60 || mascota.felicidad <= 60 || mascota.higiene <= 60" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--bunny">Conejo</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}}</div>
+                    <br>
+                    <div class="pet-card__unit-stats pet-card__unit-stats--bunny clearfix">
+                        <div class="one-third" (click)="aumentarSalud(mascota.idMascota)">
+                            <div class="stat">{{mascota.salud}} %</div>
+                            <div class="stat-value">Salud</div>
+                        </div>
+                        <div class="one-third" (click)="aumentarFelicidad(mascota.idMascota)">
+                            <div class="stat">{{mascota.felicidad}} %</div>
+                            <div class="stat-value">Felicidad</div>
+                        </div>
+                        <div class="one-third no-border" (click)="aumentarHigiene(mascota.idMascota)">
+                            <div class="stat">{{mascota.higiene}} %</div>
+                            <div class="stat-value">Higiene</div>
+                        </div>
+                    </div>
+                </div> <!-- end pet-card bunny-->
+
+                <div class="pet-card bunny" (click)="eliminarMascota(mascota.idMascota)" style="cursor: pointer;"
+                    *ngIf="mascota.tipo == 'Conejo'  && mascota.salud == 0 && mascota.felicidad == 0 && mascota.higiene == 0">
+                    <div class="pet-card__image pet-card__image--bunny">
+                        <img src="assets/images/sadBunny.png" alt="bunny" />
+                    </div>
+                    <div class="pet-card__level pet-card__level--bunny">Conejo</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}} te ha abandonado</div>
+                    <br>
+                </div> <!-- end pet-card abandonedBunny-->
+            </div> <!-- end wrapper -->
+        </div>
+    </div>
+</div>
+<br>

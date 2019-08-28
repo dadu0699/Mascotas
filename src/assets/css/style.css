@@ -1,0 +1,22 @@
+@import url(//fonts.googleapis.com/css?family=Lato:400|Inconsolata);
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
+    background: #e9eaed;
+    overflow-x: hidden;
+}
+
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
