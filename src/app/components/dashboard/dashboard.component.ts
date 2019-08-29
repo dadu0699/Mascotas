@@ -31,7 +31,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const source = interval(5000);
+        const source = interval(2500);
         this.subscription = source.subscribe(val => this.disminuir());
 
         let usuarioMascotaList: UsuarioMascota[] = [];
@@ -56,78 +56,16 @@ export class DashBoardComponent implements OnInit, OnDestroy {
 
     disminuir() {
         this.mascotas.forEach(element => {
-            if (element.tipo == 'Perro') {
-                if (element.salud >= 10) {
-                    element.salud -= 10;
-                } else {
-                    element.salud = 0;
-                }
+            if (element.salud > 0) {
+                element.salud -= 1;
+            }
 
-                if (element.felicidad >= 10) {
-                    element.felicidad -= 10;
-                } else {
-                    element.felicidad = 0;
-                }
+            if (element.felicidad > 0) {
+                element.felicidad -= 1;
+            }
 
-                if (element.higiene >= 10) {
-                    element.higiene -= 10;
-                } else {
-                    element.higiene = 0;
-                }
-            } else if (element.tipo == 'Gato') {
-                if (element.salud >= 12) {
-                    element.salud -= 12;
-                } else {
-                    element.salud = 0;
-                }
-
-                if (element.felicidad >= 4) {
-                    element.felicidad -= 4;
-                } else {
-                    element.felicidad = 0;
-                }
-
-                if (element.higiene >= 2) {
-                    element.higiene -= 2;
-                } else {
-                    element.higiene = 0;
-                }
-            } else if (element.tipo == 'Búho') {
-                if (element.salud >= 10) {
-                    element.salud -= 10;
-                } else {
-                    element.salud = 0;
-                }
-
-                if (element.felicidad >= 8) {
-                    element.felicidad -= 8;
-                } else {
-                    element.felicidad = 0;
-                }
-
-                if (element.higiene >= 6) {
-                    element.higiene -= 6;
-                } else {
-                    element.higiene = 0;
-                }
-            } if (element.tipo == 'Conejo') {
-                if (element.salud >= 4) {
-                    element.salud -= 4;
-                } else {
-                    element.salud = 0;
-                }
-
-                if (element.felicidad >= 8) {
-                    element.felicidad -= 8;
-                } else {
-                    element.felicidad = 0;
-                }
-
-                if (element.higiene >= 12) {
-                    element.higiene -= 12;
-                } else {
-                    element.higiene = 0;
-                }
+            if (element.higiene > 0) {
+                element.higiene -= 1;
             }
         });
         this.perdurarMascotas();
@@ -154,6 +92,10 @@ export class DashBoardComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+
+            if (element.salud > 100) {
+                element.salud = 100;
+            }
         });
     }
 
@@ -177,6 +119,10 @@ export class DashBoardComponent implements OnInit, OnDestroy {
                         element.felicidad += 4;
                     }
                 }
+            }
+
+            if (element.felicidad > 100) {
+                element.felicidad = 100;
             }
         });
     }
@@ -202,6 +148,10 @@ export class DashBoardComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+
+            if (element.higiene > 100) {
+                element.higiene = 100;
+            }
         });
     }
 
@@ -226,7 +176,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
         if (typeof usuarioMascotaList !== 'undefined' && usuarioMascotaList.length > 0) {
             usuarioMascotaList.forEach(element => {
                 if (element.usuario.idUsuario == this.usuario.idUsuario) {
-                    element = usuarioMascota;
+                    element.mascota = usuarioMascota.mascota;
                 } else {
                     usuarioMascotaList.push(usuarioMascota);
                 }
@@ -240,6 +190,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     }
 
     logOut() {
+        this.perdurarMascotas();
         localStorage.removeItem('user');
     }
 }
