@@ -19,34 +19,27 @@ export class UsuarioService {
         ];
     }
 
-    saveStorage(res) {
-        const message = res.message;
-        if (message === 'correct login') {
-            localStorage.setItem('user', JSON.stringify(res.user));
-            localStorage.setItem('cart', JSON.stringify([]))
+    getUser() {
+        let user = JSON.parse(localStorage.getItem('user'));
+        return user;
+    }
+
+    saveStorage(usuario: Usuario) {
+        if (usuario != null) {
+            localStorage.setItem('user', JSON.stringify(usuario));
+            if (localStorage.getItem('usuarioMascota') === null) {
+                localStorage.setItem('usuarioMascota', JSON.stringify([]))
+            }
             this._router.navigate(['/home']);
-            location.reload();
         } else {
             return false;
         }
     }
 
     authenticate(nombre: string, contrasena: string) {
-        const user = {
-            nombre: nombre,
-            contrasena: contrasena
-        };
-        const json = JSON.stringify(user);
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-
-
         for (let usuario of this.usuarios) {
             if (usuario.nombre === nombre && usuario.contrasena === contrasena) {
-                this._router.navigate(['/home']);
-
-
-                /*return this._http.post(this.url + 'login', json, { headers: headers })
-                    .map(res => res.json());*/
+                this.saveStorage(usuario);
             }
         }
     }

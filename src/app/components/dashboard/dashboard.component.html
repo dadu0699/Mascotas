@@ -14,7 +14,9 @@
             </li>
         </ul>
         <span class="navbar-text">
-            {{nombreUsuario}}
+            <a class="text-decoration-none" [routerLink]="['']" (click)="logOut()">
+                Cerrar sesión {{usuario.nombre}}
+            </a>
         </span>
     </div>
 </nav>
@@ -69,7 +71,8 @@
                             *ngIf="mascota.salud <= 60 || mascota.felicidad <= 60 || mascota.higiene <= 60" />
                     </div>
                     <div class="pet-card__level pet-card__level--dog">Perro</div>
-                    <div class="pet-card__unit-name">{{mascota.nombre}}</div>
+                    <div class="pet-card__unit-name">{{mascota.nombre}}
+                    </div>
                     <br>
                     <div class="pet-card__unit-stats pet-card__unit-stats--dog clearfix">
                         <div class="one-third" (click)="aumentarSalud(mascota.idMascota)">

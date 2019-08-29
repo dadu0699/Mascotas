@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component'
 import { DashBoardComponent } from './components/dashboard/dashboard.component'
 
 // Services
+import { AuthService } from './services/auth.service';
 import { UsuarioService } from './services/usuario.service';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { UsuarioService } from './services/usuario.service';
   ],
   providers: [
     appRoutingProviders,
+    AuthService,
     UsuarioService
   ],
   bootstrap: [AppComponent]

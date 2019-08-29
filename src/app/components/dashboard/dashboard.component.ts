@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 
 import { Mascota } from '../../models/mascota';
+import { UsuarioService } from '../../services/usuario.service';
+import { Usuario } from 'src/app/models/usuario';
+import { UsuarioMascota } from 'src/app/models/usuarioMascota';
 
 @Component({
     selector: 'app-dashboard',
@@ -10,6 +13,7 @@ import { Mascota } from '../../models/mascota';
 })
 export class DashBoardComponent implements OnInit, OnDestroy {
     public titulo: string;
+    public usuario: Usuario;
     public idMascota: number;
     public mascota: Mascota;
     public mascotas: Mascota[];
@@ -17,8 +21,10 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     public subscription: Subscription;
 
     constructor(
+        private _usuarioService: UsuarioService
     ) {
         this.titulo = 'Mascotas';
+        this.usuario = this._usuarioService.getUser();
         this.idMascota = 0;
         this.mascota = new Mascota(0, '', '', 0, 0, 0);
         this.mascotas = [];
@@ -27,6 +33,14 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     ngOnInit() {
         const source = interval(5000);
         this.subscription = source.subscribe(val => this.disminuir());
+
+        let usuarioMascotaList: UsuarioMascota[] = [];
+        usuarioMascotaList = JSON.parse(localStorage.getItem('usuarioMascota'));
+        usuarioMascotaList.forEach(element => {
+            if (element.usuario.idUsuario == this.usuario.idUsuario) {
+                this.mascotas = element.mascota;
+            }
+        });
     }
 
     ngOnDestroy() {
@@ -116,6 +130,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
                 }
             }
         });
+        this.perdurarMascotas();
     }
 
     aumentarSalud(idMascota: number) {
@@ -202,5 +217,29 @@ export class DashBoardComponent implements OnInit, OnDestroy {
         if (index !== -1) {
             this.mascotas.splice(index, 1);
         }
+    }
+
+    perdurarMascotas() {
+        let usuarioMascota: UsuarioMascota = new UsuarioMascota(this.usuario, this.mascotas);
+        let usuarioMascotaList: UsuarioMascota[] = JSON.parse(localStorage.getItem('usuarioMascota'));
+
+        if (typeof usuarioMascotaList !== 'undefined' && usuarioMascotaList.length > 0) {
+            usuarioMascotaList.forEach(element => {
+                if (element.usuario.idUsuario == this.usuario.idUsuario) {
+                    element = usuarioMascota;
+                } else {
+                    usuarioMascotaList.push(usuarioMascota);
+                }
+            });
+        } else {
+            usuarioMascotaList.push(usuarioMascota);
+        }
+
+        localStorage.removeItem('usuarioMascota');
+        localStorage.setItem('usuarioMascota', JSON.stringify(usuarioMascotaList));
+    }
+
+    logOut() {
+        localStorage.removeItem('user');
     }
 }
