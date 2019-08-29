@@ -40,8 +40,10 @@ export class UsuarioService {
         for (let usuario of this.usuarios) {
             if (usuario.nombre === nombre && usuario.contrasena === contrasena) {
                 this.saveStorage(usuario);
+                return true;
             }
         }
+        return false;
     }
 
     verifyUser(): boolean {

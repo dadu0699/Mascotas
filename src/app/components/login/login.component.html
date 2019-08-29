@@ -10,6 +10,9 @@
                         <p class="text-muted">Acceder a tu cuenta</p>
                     </div>
                     <form #formSignin="ngForm" (ngSubmit)="onSubmit()">
+                        <div class="alert alert-danger" *ngIf="!autenticacion" role="alert" align="center">
+                            El nombre de usuario y la contraseña que ingresaste no coinciden con nuestros registros.
+                        </div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Usuario" name="nombre"
                                 #nombre="ngModel" [(ngModel)]="usuario.nombre" required>

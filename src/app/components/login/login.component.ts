@@ -11,18 +11,22 @@ import { UsuarioService } from '../../services/usuario.service';
 export class LoginComponent implements OnInit {
     public titulo: string;
     public usuario: Usuario;
+    public autenticacion: boolean;
 
     constructor(
         private _usuarioService: UsuarioService
     ) {
         this.titulo = 'Iniciar sesión';
         this.usuario = new Usuario(0, '', '');
+        this.autenticacion = true;
     }
 
     ngOnInit() {
     }
 
     onSubmit() {
-        this._usuarioService.authenticate(this.usuario.nombre, this.usuario.contrasena)
+        if (!this._usuarioService.authenticate(this.usuario.nombre, this.usuario.contrasena)) {
+            this.autenticacion = false;
+        }
     }
 }
